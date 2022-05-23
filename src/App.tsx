@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [money, setMoney] = useState([
+        {banknots: 'Dollars', value: 100, number: ' a1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' z1234567890'},
+        {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
+        {banknots: 'Dollars', value: 100, number: ' e1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' c1234567890'},
+        {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
+        {banknots: 'Dollars', value: 50, number: ' x1234567890'},
+        {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
+    ])
+
+    const [filter,setFilter]=useState('all')
+
+    let currentMoney=money;
+
+    if (filter === 'RUBLS') {
+        currentMoney = money.filter((filterMoney) => filterMoney.banknots === "RUBLS")
+    };
+
+    if (filter === 'Dollars') {
+        currentMoney = money.filter((filterMoney) => filterMoney.banknots === "Dollars")
+    };
+
+
+    let onclickFilterHandler = (nameButton:string) => {
+        setFilter(nameButton)
+    }
+
+    return (
+        <>
+            <ul>
+                {currentMoney.map((el, index) => {
+                    return (
+                        <li key={index}>
+                            <span>{el.banknots}</span>
+                            <span>{el.value}</span>
+                            <span>{el.number}</span>
+                        </li>
+                    )
+                })}
+            </ul>
+            <div style={{marginLeft:'35px'}}>
+                <button onClick={()=>onclickFilterHandler('All')}>All</button>
+                <button onClick={()=>onclickFilterHandler('Dollars')}>Dollars</button>
+                <button onClick={()=>onclickFilterHandler('RUBLS')}>RUBLS</button>
+            </div>
+
+        </>
+
+    );
 }
 
 export default App;
